@@ -88,10 +88,27 @@ class CliTests(unittest.TestCase):
         self.assertFalse(self.fixture["state"].exists())
 
     def test_launch_without_port_is_refused(self) -> None:
-        code, data = self.run_cli(["launch", "--json", "--steam-binary", "/bin/true", *self.common()])
+        code, data = self.run_cli(
+            ["launch", "--json", "--port", "0", "--steam-binary", "/bin/true", *self.common()]
+        )
         self.assertEqual(code, 6)
         self.assertFalse(data["ok"])
         self.assertIn("port", data["error"]["message"].lower())
+
+    def test_default_config_is_created(self) -> None:
+        config = self.root / "config" / "13thpandemic" / "config.toml"
+        self.assertFalse(config.exists())
+        with contextlib.redirect_stdout(io.StringIO()):
+            data = cli.load_config(None, create_if_missing=True)
+        self.assertTrue(config.is_file())
+        self.assertEqual(data["server"]["port"], 16262)
+        self.assertEqual(data["server"]["host"], "pz.13thpandemic.net")
+        text = config.read_text(encoding="utf-8")
+        self.assertIn("port = 16262", text)
+        # Second invocation must not overwrite it.
+        config.write_text(text + "\n# user edit\n", encoding="utf-8")
+        cli.load_config(None, create_if_missing=True)
+        self.assertIn("# user edit", config.read_text(encoding="utf-8"))
 
     def test_config_file_is_read(self) -> None:
         config = self.root / "config.toml"

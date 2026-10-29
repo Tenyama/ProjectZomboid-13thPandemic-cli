@@ -93,19 +93,21 @@ Linux:  ~/.config/13thpandemic/config.toml
 macOS:  ~/Library/Application Support/13thpandemic/config.toml
 ```
 
-`XDG_CONFIG_HOME` overrides both when set.
+`XDG_CONFIG_HOME` overrides both when set. The file is created automatically on
+the first CLI invocation with `port = 16262`; an existing file is never
+overwritten. `apply --dry-run` and `launch --dry-run` do not create it.
 
 Example:
 
 ```toml
 [server]
 host = "pz.13thpandemic.net"
-port = 0          # 0 = unset; launch requires a real value
+port = 16262
 
 [launch]
 method = "applaunch"
-steam_binary = "steam"   # macOS auto-detects steam_osx when possible
-zombie_buddy = "auto"    # auto | on | off
+# steam_binary = "steam"   # omitted by default for platform auto-detection
+zombie_buddy = "auto"      # auto | on | off
 
 [paths]
 # All optional; detection uses Steam metadata when empty.

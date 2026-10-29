@@ -12,6 +12,7 @@ MOD_DIR_NAME = "13thPandemic"
 GAME_JAR = "projectzomboid.jar"
 GAME_CONFIG = "ProjectZomboid64.json"
 DEFAULT_SERVER_HOST = "pz.13thpandemic.net"
+DEFAULT_SERVER_PORT = 16262
 ZOMBIE_BUDDY_JAR = "ZombieBuddy.jar"
 
 # Known required server mods and the local load-order anchor for each.
