@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pz13th"
+version = "0.1.0"
+description = "Native Linux/macOS launcher for the 13thPandemic Project Zomboid modpack"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+pz13th = "pz13thlib.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pz13thlib*"]

@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Entry point for the 13thPandemic native Linux/macOS launcher CLI.
+
+Bytecode generation is disabled before importing the local package so that
+read-only commands (detect, status, apply --dry-run) do not create files in
+the project tree.
+"""
+
+import sys
+
+sys.dont_write_bytecode = True
+
+from pz13thlib.cli import main  # noqa: E402
+
+if __name__ == "__main__":
+    raise SystemExit(main())
